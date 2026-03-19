@@ -30,13 +30,14 @@ This paper investigates how the choice of norm constraint on the hyperplane norm
 .
 ├── data/
 │   └── small-all/         # 270+ benchmark instances (m=10–30, n=2–3, K=2–3)
-├── src-instances/         # C++ heuristic solvers and instance generators
+├── src-instances/         # C++ code for instance generation and the heuristic
+│   │                      #   algorithms of Amaldi & Coniglio (2013)
 │   ├── main.cpp           # Main solver executable
 │   ├── makeinstance.cpp   # Instance generator
 │   ├── algorithm.cpp      # Bradley-Mangasarian and Tabu Search algorithms
 │   ├── exact.cpp          # SVD-based exact hyperplane updates
 │   └── ...
-└── src-formulations/      # AMPL exact MIP formulations
+└── src-formulations/      # AMPL exact MIP formulations (this paper)
     ├── compact.mod        # Core objective and assignment constraints
     ├── n1.mod             # L1-norm constraint
     ├── n2.mod             # L2-norm constraint
@@ -158,24 +159,17 @@ The naming convention is `sr_M_N_K_SEED_ins`.
 
 ## Algorithms
 
-### Heuristic solver
-
-The heuristic algorithms (BM, TSBM, APR, and variants) are from:
+The heuristic algorithms in `src-instances/` (BM, TSBM, APR, and variants) are from:
 
 > Amaldi, E., Coniglio, S. (2013). *A distance-based point-reassignment heuristic for the k-hyperplane clustering problem.* European Journal of Operational Research, 227(1), 22–29.
+
+The exact MIP formulations in `src-formulations/` are introduced in this paper (see citation below).
 
 | Name | Description |
 |---|---|
 | BM / mBM | Bradley-Mangasarian local search (multi-start) |
 | TSBM / mTSBM | Tabu Search variant of BM |
 | APR / mAPR | Alternating Projection Reassignment |
-
-### Exact solver
-
-The MIP formulations (AMPL + Gurobi) are introduced in this paper (see citation below).
-
-| Name | Description |
-|---|---|
 | Exact (AMPL) | MIP solved via Gurobi (time limit: 4 hours) |
 
 ---
