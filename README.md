@@ -29,7 +29,7 @@ This paper investigates how the choice of norm constraint on the hyperplane norm
 ```
 .
 ├── data/
-│   └── small-all/         # 270+ benchmark instances (m=10–30, n=2–3, K=2–3)
+│   └── small-all/         # 84 benchmark instances (m=10–30, n=2–3, K=2–3)
 ├── src-instances/         # C++ code for instance generation and the heuristic
 │   │                      #   algorithms of Amaldi & Coniglio (2013)
 │   ├── main.cpp           # Main solver executable
@@ -66,16 +66,21 @@ This paper investigates how the choice of norm constraint on the hyperplane norm
 
 ## Running the Exact Formulations
 
-**1. Prepare the data:**
-
-```bash
-unzip data.zip
-```
+**1. The data:** the instances are already in `data/small-all/`, each as an
+`.ins`-format file (no extension) for the heuristics and a `.dat` file for
+AMPL; nothing needs unpacking.
 
 **2. Run all instances:**
 
+`batchrun.sh` reads the instances from `DATADIR="../../data/small-all"` and
+writes the solver logs to `../../log/$JOURNAL/$LOGDIR/`, both relative to
+`src-formulations/`, so one level above the repository. To run from a fresh
+clone, set `DATADIR="../data/small-all"` in `batchrun.sh` (or copy `data/`
+one level up) and create the log folder first:
+
 ```bash
 cd src-formulations
+mkdir -p ../../log/neurips2022/small-all
 ./batchrun.sh
 ```
 
@@ -95,7 +100,7 @@ This generates a `parallelcommands` file with one AMPL call per instance and for
 
 The prefix `ss` uses symmetry-breaking constraints (smallSets); `fs` uses full sets.
 
-Solver output is written to `log/JOURNAL/LOGDIR/`.
+Solver output is written to `../../log/$JOURNAL/$LOGDIR/` (by default `../../log/neurips2022/small-all/`, relative to `src-formulations/`).
 
 ---
 
@@ -113,7 +118,7 @@ This produces `bin/k-hc-2014` and `bin/makeinstance-2014`.
 **Solve an instance:**
 
 ```bash
-./bin/k-hc-2014 -f data/small-all/sr_10_2_2_1022_ins -m mBM -k 2
+./bin/k-hc-2014 -f ../data/small-all/sr_10_2_2_1022_ins -m mBM -k 2
 ```
 
 Key options:
