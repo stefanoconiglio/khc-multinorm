@@ -118,18 +118,23 @@ This produces `bin/k-hc-2014` and `bin/makeinstance-2014`.
 **Solve an instance:**
 
 ```bash
-./bin/k-hc-2014 -f ../data/small-all/sr_10_2_2_1022_ins -m mBM -k 2
+./bin/k-hc-2014 -f ../data/small-all/sr_10_2_2_1022_ins -a mBM -k 2 -T 60
 ```
 
-Key options:
+Key options (from `src-instances/main.cpp`):
 
 | Flag | Description |
 |---|---|
 | `-f <file>` | Input instance file |
-| `-m <method>` | Algorithm: `BM`, `mBM`, `TSBM`, `mTSBM`, `APR`, `mAPR`, ... |
+| `-a <method>` | Algorithm: `BM`, `mBM`, `TSBM`, `mTSBM`, `aBM` (APR), `mAPR`, ... |
 | `-k <K>` | Number of clusters |
-| `-t <seconds>` | Time limit |
-| `-s <seed>` | Random seed |
+| `-m <n>` | Number of multistarts (for the `m...` methods) |
+| `-T <seconds>` | Time limit |
+| `-t <length>:aspire` | Tabu search: tabu list length, and `aspire` or `dont_aspire` for the aspiration criterion |
+
+The default time limit is 1e300 seconds and the default number of
+multistarts is unset (`int(1e300)`): give the multistart methods `-m` or
+`-T`. The heuristic takes no seed option.
 
 **Generate a new instance:**
 
@@ -137,7 +142,7 @@ Key options:
 ./bin/makeinstance-2014 -t sr -m 50 -n 3 -k 3 -s 42
 ```
 
-Options: `-t` (type: `sr` = semi-random), `-m` (points), `-n` (dimensions), `-k` (clusters), `-s` (seed), `-v` (variance).
+Options: `-t` (type: `sr` = semi-random), `-m` (points), `-n` (dimensions), `-k` (clusters), `-s` (seed), `-v` (variance), `-A` (also write the AMPL `.dat` file), `-M` (also write a Matlab `.m` file, for n = 2 only).
 
 ---
 
